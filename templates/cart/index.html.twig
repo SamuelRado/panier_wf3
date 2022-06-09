@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Votre panier
+{% endblock %}
+
+{% block body %}
+
+	<h1 class="text-center">Votre panier</h1>
+
+	{% if items %}
+
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Produit</th>
+					<th>Prix</th>
+					<th>Quantité</th>
+					<th>Total</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for item in items %}
+					<tr>
+						<td>{{ item.product.title }}</td>
+						<td>{{ item.product.price }}€</td>
+						<td>
+							<a href="{{ path('cart_decrement', {id: item.product.id}) }}" class="btn-sm btn-success">
+								<i class="fas fa-minus"></i>
+							</a>
+							{{ item.quantity }}
+                            <a href="{{ path('cart_add', {id: item.product.id, route: app.request.get('_route')}) }}" class="btn-sm btn-success">
+								<i class="fas fa-plus"></i>
+							</a>
+						</td>
+						<td>{{ item.product.price * item.quantity }}€</td>
+						<td>
+							<a href="{{ path('cart_remove', {id: item.product.id}) }}" class="btn-sm btn-danger">
+								<i class="fas fa-trash"></i>
+							</a>
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+			<tfoot>
+				<tr>
+					<td colspan="3" class="text-end">Total :</td>
+					<td>{{ total }}€</td>
+                    <td>
+                        <a href="{{ path('cart_empty') }}" class="btn-sm btn-danger">
+                            <i class="fas fa-trash-alt"></i>
+                        </a>
+                    </td>
+				</tr>
+			</tfoot>
+		</table>
+
+	{% else %}
+		<p>Votre panier est vide</p>
+	{% endif %}
+
+{% endblock %}
