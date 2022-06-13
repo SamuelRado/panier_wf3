@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Communication api geo
+{% endblock %}
+
+{% block body %}
+
+	{{ form_start(form) }}
+
+	{{ form_widget(form.dpt, {
+			attr: {
+				placeholder: "Entrez le code d'un département"
+			}
+		}) }}
+
+	<button type="submit" class="btn btn-primary">Rechercher</button>
+
+	{{ form_end(form) }}
+
+	{% if communes is iterable %}
+		<table>
+			<head>
+				<th>Nom</th>
+				<th>Population</th>
+			</head>
+			<body>
+				{% for commune in communes %}
+					<tr>
+						<td>{{ commune.nom }}</td>
+						<td>{{ commune.population }}</td>
+					</tr>
+				{% endfor %}
+			</body>
+		</table>
+	{% elseif communes == -1 %}
+		<p>Ce code de département est incorrect</p>
+	{% endif %}
+{% endblock %}

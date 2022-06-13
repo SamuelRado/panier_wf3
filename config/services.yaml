@@ -22,5 +22,12 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
 
+    App\EventListener\ExceptionListener:
+        tags:
+            - { name: kernel.event_listener, event: kernel.exception }
+
+    # on ajoute ce nouveau service à Symfony
+    # on précise que c'est un Listener qui écoute l'évènement kernel.exception
+
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
